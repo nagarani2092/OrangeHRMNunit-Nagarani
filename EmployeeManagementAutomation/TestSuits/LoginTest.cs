@@ -1,4 +1,5 @@
 ﻿using EmployeeManagementAutomation.Base;
+using EmployeeManagementAutomation.Utilities;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementAutomation.TestSuits
 {
+    [TestFixture]
     public class LoginTest : AutomationWrapper
     {
         [Test]
@@ -19,9 +21,11 @@ namespace EmployeeManagementAutomation.TestSuits
             string actualValue = driver.FindElement(By.XPath("//p[text()='Time at Work']")).Text;
             Assert.That(actualValue, Is.EqualTo("Time at Work"));
         }
-
-        [Test]
-        public void InValidLoginTest()
+        
+         [Test,TestCaseSource(typeof(DataSource), nameof(DataSource.InvalidLoginCredentials))]
+        //[TestCase("naga", "naga123", "Invalid credentials")]
+        //[TestCase("syed", "syed123", "Invalid credentials")]
+        public void InValidLoginTest(string username, string password, string expectedMessage)
         {
             driver.FindElement(By.Name("username")).SendKeys("Naga");
             driver.FindElement(By.Name("password")).SendKeys("admin123");
