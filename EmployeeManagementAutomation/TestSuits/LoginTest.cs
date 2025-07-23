@@ -1,4 +1,5 @@
 ﻿using EmployeeManagementAutomation.Base;
+using EmployeeManagementAutomation.Pages;
 using EmployeeManagementAutomation.Utilities;
 using OpenQA.Selenium;
 using System;
@@ -15,11 +16,18 @@ namespace EmployeeManagementAutomation.TestSuits
         [Test]
         public void ValidLoginTest()
         {
-            driver.FindElement(By.Name("username")).SendKeys("Admin");
-            driver.FindElement(By.Name("password")).SendKeys("admin123");
-            driver.FindElement(By.XPath("//button[text()=' Login ']")).Click();
-            string actualValue = driver.FindElement(By.XPath("//p[text()='Time at Work']")).Text;
+            
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.EnterUsername( "Admin");
+            loginPage.EnterPassword("admin123");
+            loginPage.ClickOnLogin();
+
+
+            DashBoardPage dashboardPage = new DashBoardPage(driver);
+            string actualValue = dashboardPage.GetTimeAtWorkHeader();
             Assert.That(actualValue, Is.EqualTo("Time at Work"));
+
+           
         }
         
          [Test,TestCaseSource(typeof(DataSource), nameof(DataSource.InvalidLoginCredentials))]
@@ -27,14 +35,15 @@ namespace EmployeeManagementAutomation.TestSuits
         //[TestCase("syed", "syed123", "Invalid credentials")]
         public void InValidLoginTest(string username, string password, string expectedMessage)
         {
-            driver.FindElement(By.Name("username")).SendKeys("Naga");
-            driver.FindElement(By.Name("password")).SendKeys("admin123");
-            driver.FindElement(By.XPath("//button[text()=' Login ']")).Click();
-            Thread.Sleep(5000);
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.EnterUsername( username);
+            loginPage.EnterPassword( password);
+            loginPage.ClickOnLogin();
 
-            string actualValue = driver.FindElement(By.XPath("//p[text()='Invalid credentials']")).Text;
 
-            Assert.That(actualValue.Contains("Invalid credentials"),"Assertion on Invalid credentials");
+
+            string actualValue = loginPage.GetInvalidErrorMessage();
+            Assert.That(actualValue, Is.EqualTo("Assertion on Invalid credentials"));
         }
     }
 }
