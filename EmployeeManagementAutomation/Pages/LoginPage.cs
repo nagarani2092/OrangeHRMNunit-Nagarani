@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementAutomation.Pages
 {
-    public class LoginPage
+    public class LoginPage : WebDriverKeywords
     {
         private By usernameLocator = By.Name("username");
         private By passwordLocator = By.Name("password");
@@ -17,7 +17,7 @@ namespace EmployeeManagementAutomation.Pages
 
         private IWebDriver _driver;
 
-        public LoginPage(IWebDriver driver)
+        public LoginPage(IWebDriver driver) : base(driver) 
         {
             this._driver = driver;
         }

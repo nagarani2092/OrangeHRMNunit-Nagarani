@@ -8,20 +8,13 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementAutomation.Pages
 {
-    public class DashBoardPage : WebDriverKeywords
+    public class AddEmployeePage : WebDriverKeywords
     {
-
-        private By timeAtWorkLocator = By.XPath("//p[contains(normalize-space(),'Work')]");
         private IWebDriver _driver;
 
-        public DashBoardPage(IWebDriver driver) : base(driver) 
+        public AddEmployeePage(IWebDriver driver) : base(driver)
         {
             this._driver = driver;
-        }
-
-        public string GetTimeAtWorkHeader()
-        {
-            return _driver.FindElement(timeAtWorkLocator).Text;
         }
     }
 }

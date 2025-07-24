@@ -43,7 +43,8 @@ namespace EmployeeManagementAutomation.TestSuits
 
 
             string actualValue = loginPage.GetInvalidErrorMessage();
-            Assert.That(actualValue, Is.EqualTo("Assertion on Invalid credentials"));
+            Assert.That(actualValue, Is.EqualTo("Invalid credentials"));
         }
+
     }
 }
